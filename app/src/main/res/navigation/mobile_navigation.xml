@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.itime.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_mainpage" />
+
+    <fragment
+        android:id="@+id/nav_sign"
+        android:name="com.example.itime.ui.mark.MarkFragment"
+        tools:layout="@layout/fragment_mark" />
+
+    <fragment
+        android:id="@+id/nav_widget"
+        android:name="com.example.itime.ui.widget.ComponentFragment"
+        tools:layout="@layout/fragment_component" />
+
+    <fragment
+        android:id="@+id/nav_color"
+        android:name="com.example.itime.ui.color.colorFrament"
+        tools:layout="@layout/fragment_color" />
+
+    <fragment
+        android:id="@+id/nav_prime"
+        android:name="com.example.itime.ui.prime.SeniorFragment"
+        tools:layout="@layout/fragment_senior" />
+
+    <fragment
+        android:id="@+id/nav_setting"
+        android:name="com.example.itime.ui.setting.SettingFragment"
+        tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.example.itime.ui.about.AboutFragment"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/nav_help"
+        android:name="com.example.itime.ui.help.HelpFragment"
+        tools:layout="@layout/fragment_help" />
+</navigation>

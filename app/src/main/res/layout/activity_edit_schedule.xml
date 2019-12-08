@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="vertical"
+    tools:context=".EditScheduleActivity">
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="-125dp"
+        android:background="?attr/actionModeCloseDrawable"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_ok"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="8dp"
+        android:background="@android:drawable/checkbox_on_background"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_set_cycle"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:weightSum="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_set_date">
+
+        <ImageView
+            android:id="@+id/image_view_cycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            app:srcCompat="@drawable/cycle" />
+
+        <RelativeLayout
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/text_view_cycle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="重复设置"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_cycleInstruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view_cycle"
+                android:paddingTop="5dp"
+                android:text="无"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_set_title"
+        android:layout_width="406dp"
+        android:layout_height="232dp"
+        android:background="@android:color/holo_blue_dark"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="标题"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_text_title"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:hint="生日，纪念日，节日，考试..."
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/text_view_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="15dp"
+            android:text="备注"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edit_text_remark"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="35dp"
+            android:layout_weight="0.14"
+            android:ems="10"
+            android:hint="想说的话，目标，格言..."
+            android:inputType="textPersonName"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_set_mark"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_set_image">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            app:srcCompat="@drawable/mark" />
+
+        <RelativeLayout
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/count_biaoti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加标签"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_set_date"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:weightSum="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_set_title">
+
+        <ImageView
+            android:id="@+id/image_view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            app:srcCompat="@drawable/date" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/text_view_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日期"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_view_dateInstruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view_date"
+                android:paddingTop="5dp"
+                android:text="长按使用日期计算器"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/text_view_timeInstruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_view_date"
+                android:layout_toRightOf="@+id/text_view_dateInstruction"
+                android:paddingTop="5dp"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_set_image"
+        android:layout_width="350dp"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_set_cycle">
+
+        <ImageView
+            android:id="@+id/image_view_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            app:srcCompat="@drawable/image" />
+
+        <RelativeLayout
+            android:layout_width="244dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/text_view_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加图片"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
