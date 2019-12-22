@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -43,24 +44,25 @@ public class EditScheduleActivity extends AppCompatActivity {
     private Context context;
     private String now_riqi,now_time;
     private SelectPictureManager selectPictureManager;
+    private Bitmap bitmap;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_schedule);
         ActionBar actionBar = getSupportActionBar();
-        //隐藏标题栏
         if (actionBar != null) {
             actionBar.hide();
         }
-        buttonCancel=(Button)findViewById(R.id.button_cancel);
+       buttonCancel=(Button)findViewById(R.id.button_cancel);
         buttonOk=(Button)findViewById(R.id.button_ok);
 
         context=this;
         date = new StringBuffer();
         time = new StringBuffer();
 
-        initDateTime();
         initDateView();
+        initDateTime();
+       //即使不设置时间，获得当前时间
         now_riqi=date.append(String.valueOf(year)).append("年").append(String.valueOf(month+1)).append("月").append(day).append("日").toString();
         now_time=time.append(String.valueOf(hour)).append("时").append(String.valueOf(minute)).append("分").toString();
         linearLayouTitle=(LinearLayout)findViewById(R.id.linearLayout_set_title);
@@ -98,7 +100,10 @@ public class EditScheduleActivity extends AppCompatActivity {
 
                     if(dateView.getText().toString().equals("长按使用日期计算器")) {
                         intent.putExtra("schedule_date", now_riqi);
-                        intent.putExtra("schedule_time",now_time);
+                        if(timeView.getText().toString().equals(" "))
+                            intent.putExtra("schedule_time",now_time);
+                        else
+                            intent.putExtra("schedule_time",timeView.getText().toString());
                     }
                     else {
                         intent.putExtra("schedule_date", dateView.getText().toString());
@@ -107,6 +112,7 @@ public class EditScheduleActivity extends AppCompatActivity {
                        else
                            intent.putExtra("schedule_time",timeView.getText().toString());
                     }
+
                     setResult(RESULT_OK, intent);
                     EditScheduleActivity.this.finish();
                 }
@@ -166,7 +172,7 @@ private void setCycle(){
         linearLayoutDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+              AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
                 builder2.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -201,7 +207,6 @@ private void setCycle(){
                 dialog2.setView(dialogView2);
                 dialog2.show();
 
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
@@ -222,12 +227,10 @@ private void setCycle(){
                 final AlertDialog dialog = builder.create();
                 View dialogView = View.inflate(context, R.layout.dialog_date, null);
                 final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker);
-
                 dialog.setTitle("设置日期");
                 dialog.setView(dialogView);
                 dialog.show();
-
-                //初始化日期监听事件
+            //初始化日期监听事件
                 datePicker.init(year, month, day, new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -239,8 +242,6 @@ private void setCycle(){
         }
         });
     }
-
-
     /**
      * 获取当前的日期和时间
      */
@@ -249,18 +250,21 @@ private void setCycle(){
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        hour = calendar.get(Calendar.HOUR);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
     }
-    void initSelectPictureManager() {
+    //图片设置
+  public  void initSelectPictureManager() {
         selectPictureManager = new SelectPictureManager(this);
         selectPictureManager.setPictureSelectListner(new SelectPictureManager.PictureSelectListner() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onPictureSelect(String imagePath) {
                 if(imagePath != null){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-                    linearLayouTitle.setBackground( new BitmapDrawable(getResources(),bitmap));
+                     bitmap = BitmapFactory.decodeFile(imagePath);
+                    //Bitmap转换成为Drawable
+                    Drawable drawable=new BitmapDrawable(getResources(),bitmap);
+                    linearLayouTitle.setBackground(drawable);
                 }else {
                     Toast.makeText(context,"获取图片失败", Toast.LENGTH_SHORT).show();
                 }
@@ -288,6 +292,5 @@ private void setCycle(){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         selectPictureManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 
 }

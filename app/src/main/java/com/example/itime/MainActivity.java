@@ -4,6 +4,7 @@ package com.example.itime;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.ContextMenu;
@@ -51,13 +52,16 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Schedule> listSchedules = new ArrayList<>();
     private ScheduleAdapter scheduleAdapter;
     private FileDataSource fileDataSource;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        InitData();
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+         fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
         listViewSchedules.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Schedule schedule = listSchedules.get(position);
+             Schedule schedule = listSchedules.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putInt("photo", schedule.getCoverResourceId());
                 bundle.putString("message_title", schedule.getTitle());
                 bundle.putString("message_deadline", schedule.getDeadline());
                 bundle.putString("message_time", schedule.getDdl_time());
-                //bundle.putString("message_remark",schedule.getRemark());
+                bundle.putString("message_remark",schedule.getRemark());
                 Intent intent = new Intent();
                 intent.putExtras(bundle);
                 intent.setClass(MainActivity.this, Countdown.class);
@@ -100,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -113,19 +119,26 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         fileDataSource.save();
     }
-
+    //修改主题颜色——没啥用
+    public void changeThemeColor(int color){
+        if(color==0)
+            Toast.makeText(this, "颜色为空", Toast.LENGTH_SHORT).show();
+        else {
+            toolbar.setBackgroundColor(color);
+            fab.setBackgroundTintList(ColorStateList.valueOf(color));
+        }
+    }
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v == findViewById(R.id.listview)) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            //设置标题
             menu.setHeaderTitle(listSchedules.get(info.position).getTitle());
             //添加内容
             menu.add(0, CONTEXT_MENU_DELETE, 0, "删除");
@@ -178,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    //onActivityResult（）是从NewBookActiviy回调到BookListActivity的
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -189,7 +201,8 @@ public class MainActivity extends AppCompatActivity {
                     String remark = data.getStringExtra("schedule_remark");
                     String deadline = data.getStringExtra("schedule_date");
                     String time = data.getStringExtra("schedule_time");
-                    getListSchedules().add(position, new Schedule(title, R.drawable.windwill, remark, deadline, time));
+
+                    getListSchedules().add(position, new Schedule(title,R.drawable.windwill, remark, deadline, time));
                     //通知适配器已改变
                     scheduleAdapter.notifyDataSetChanged();
 
@@ -225,8 +238,6 @@ public class MainActivity extends AppCompatActivity {
     private void InitData() {
         fileDataSource = new FileDataSource(this);
         listSchedules = fileDataSource.load();
-        //if (listSchedules.size() == 0)
-        //  listSchedules.add(new Schedule("标题", R.drawable.windwill, "备注", "2019年11月25日","0时0分"));
 
     }
 
@@ -234,9 +245,8 @@ public class MainActivity extends AppCompatActivity {
         Date nowDate = new Date(System.currentTimeMillis());//当前时间
         long nowDateLong = nowDate.getTime();
         String endTimeStr = endTime + "00秒";
-        // String endTimeStr = "2017-12-29"+ " 15:45:00";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
-        // String endTimeStr = "2017-12-29"+ " 15:45:00";
+
         Date EndDate = null;
         try {
             EndDate = simpleDateFormat.parse(endTimeStr);
@@ -279,7 +289,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public class ScheduleAdapter extends ArrayAdapter<Schedule> {
 
         private int resourceId;
@@ -304,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
             scheduleTitle.setText(schedule_item.getTitle() + "\n" + schedule_item.getDeadline() + "\n" + schedule_item.getRemark());
             final String str=schedule_item.getDeadline()+" "+schedule_item.getDdl_time();
             // scheduleTianshu.setText(ShengYuShiJian(schedule_item.getDeadline()));
-            CountDownTimer countDownTimer = new CountDownTimer(60 * 1000, 1000) {
+            new CountDownTimer(60 * 1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     // TODO Auto-generated method stub
@@ -319,4 +328,5 @@ public class MainActivity extends AppCompatActivity {
             return item;
         }
     }
+
 }

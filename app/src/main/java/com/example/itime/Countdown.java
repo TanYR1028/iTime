@@ -2,6 +2,7 @@ package com.example.itime;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ import java.util.Date;
 
 //参考网址https://www.jianshu.com/p/1d765ae956cd
 public class Countdown extends AppCompatActivity {
-
+private Button bt_edit,bt_back;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countdown);
@@ -22,13 +23,12 @@ public class Countdown extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt("photo");
         String message1 = bundle.getString("message_title");
-        //String message2=bundle.getString("message_remark");
         final String message2 = bundle.getString("message_deadline");
        final String message3=bundle.getString("message_time");
+       String message4=bundle.getString("message_remark");
          final String ddl=message2+" "+message3;
         ImageView Iv = (ImageView) findViewById(R.id.count_img);
         Iv.setImageResource(id);
-
         TextView biaoti = (TextView) findViewById(R.id.count_biaoti);
         TextView deadline = (TextView) findViewById(R.id.count_deadline);
         final TextView daojishi;
@@ -37,9 +37,7 @@ public class Countdown extends AppCompatActivity {
         biaoti.setText(message1);
         deadline.setText(ddl+" "+getWeek(message2));
 
-
-      //daojishi.setText(ShengYuShiJian(message2));
-        CountDownTimer countDownTimer = new CountDownTimer(60 * 1000, 1000) {
+         new CountDownTimer(60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // TODO Auto-generated method stub
@@ -48,24 +46,13 @@ public class Countdown extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-
             }
         }.start();
+
     }
     //得到当天是星期几
     public static String getWeek(String time) {
-
-        //2019年12月1日
-        //SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
         Calendar calendar = Calendar.getInstance();
-
-      /*  Date datet = null;
-        try {
-            datet = format.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-       calendar.setTime(datet);*/
         int weekIndex = calendar.get(Calendar.DAY_OF_WEEK);
 
         String week = "";
@@ -77,8 +64,7 @@ public class Countdown extends AppCompatActivity {
             case 3:
                 week = "星期二";break;
             case 4:
-                week = "星期三";
-                break;
+                week = "星期三";break;
             case 5:
                 week = "星期四";break;
             case 6:
@@ -90,11 +76,10 @@ public class Countdown extends AppCompatActivity {
 
     }
 
-        private String ShengYuShiJian(String endTime) {
+    private String ShengYuShiJian(String endTime) {
         Date nowDate = new Date(System.currentTimeMillis());//当前时间
         long nowDateLong = nowDate.getTime();
        String endTimeStr = endTime + "00秒";
-        // String endTimeStr = "2017-12-29"+ " 15:45:00";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         Date EndDate = null;
         try {
@@ -147,5 +132,4 @@ public class Countdown extends AppCompatActivity {
             }
         }
     }
-
-    }
+}
